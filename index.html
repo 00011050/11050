@@ -1,0 +1,48 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP8266 Water detection </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    h1 {
+      color: #3498db;
+    }
+    p {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>ESP8266 Weather Station</h1>
+  <p>Distance: <span id="distance"></span> cm</p>
+  <p>Water Level: <span id="waterLevel"></span></p>
+
+  <script>
+    function fetchData() {
+      // Use Fetch API to get data from ESP8266
+      fetch('/data')
+        .then(response => response.json())
+        .then(data => {
+          // Update HTML elements with received data
+          document.getElementById('distance').innerText = data.distance;
+          document.getElementById('waterLevel').innerText = data.waterLevel;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+
+    // Fetch data on page load
+    fetchData();
+
+    // Fetch data every 5 seconds (adjust as needed)
+    setInterval(fetchData, 5000);
+  </script>
+</body>
+</html>
